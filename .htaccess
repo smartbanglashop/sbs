@@ -1,0 +1,67 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # http থেকে https-এ পাঠানো
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # non-www থেকে www-এ পাঠানো
+    RewriteCond %{HTTP_HOST} ^smartbanglashop\.com [NC]
+    RewriteRule ^ https://www.smartbanglashop.com%{REQUEST_URI} [L,R=301]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+    
+
+  
+  
+</IfModule>
+
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML, and JSON files
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+
+    # Optional: Set compression level (1-9, 9 is highest)
+    # DeflateCompressionLevel 6
+
+    # Optional: Exclude certain user agents that have issues with compression
+    # BrowserMatch ^Mozilla/4 gzip-only-text/html
+    # BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    # BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+    # Optional: Ensure proxies do not deliver the wrong content
+    Header append Vary User-Agent Env(no-gzip)
+</IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
